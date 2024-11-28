@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { DisplayDifficulty } from "./components/DisplayDifficulty/DisplayDifficulty";
-import { MenuList } from "./components/MenuList/MenuList";
 import s from "./style.module.css";
+import { MenuList } from "./components/MenuList/MenuList";
 
 export function App() {
   const [currentDifficulty, setCurrDifficulty] = useState("Insane");
