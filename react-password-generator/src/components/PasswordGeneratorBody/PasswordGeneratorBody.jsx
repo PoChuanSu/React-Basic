@@ -1,12 +1,25 @@
 import s from "./style.module.css";
 
-export function PasswordGeneratorBody() {
+export function PasswordGeneratorBody(props) {
+  const submit = (e) => {
+    e.preventDefault();
+    console.log("***", "submit");
+    let formData = {};
+    new FormData(e.currentTarget).forEach((value, key) => {
+      formData[key] = value;
+    });
+    console.log("***", formData);
+
+    let generatedPassword = Math.random();
+    props.onSubmit(generatedPassword);
+  };
+
   return (
-    <form>
+    <form onSubmit={submit}>
       <div className={s.grid_container}>
         <div className={s.grid_item}>
           Size
-          <select defaultValue={15}>
+          <select name="size" defaultValue={15}>
             <option>5</option>
             <option>10</option>
             <option>15</option>
@@ -15,19 +28,21 @@ export function PasswordGeneratorBody() {
         </div>
         <div className={s.grid_item}>
           Uppercase
-          <input type="checkbox" defaultChecked />
+          <input name="uppercase" type="checkbox" defaultChecked />
         </div>
         <div className={s.grid_item}>
           Numbers
-          <input type="checkbox" defaultChecked />
+          <input name="number" type="checkbox" defaultChecked />
         </div>
         <div className={s.grid_item}>
           Specials
-          <input type="checkbox" defaultChecked />
+          <input name="special" type="checkbox" defaultChecked />
         </div>
       </div>
       <div className={s.btn_container}>
-        <button className={s.btn_generate}>GENERATE</button>
+        <button type="submit" className={s.btn_generate}>
+          GENERATE
+        </button>
       </div>
     </form>
   );
