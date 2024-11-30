@@ -5,18 +5,37 @@ import { BACKDROP_BASE_URL } from "./config";
 import { TVShowDetail } from "./components/TVShowDetail/TVShowDetail";
 import logoImg from "./assets/images/logo.png";
 import { Logo } from "./components/Logo/Logo";
+import { TVShowListItem } from "./components/TVShowListItem/TVShowListItem";
 
 TVShowAPI.fetchPopulars();
 export function App() {
   const [currentTVShow, setCurrentTVShow] = useState();
+  const [recommendationList, setRecommendationList] = useState([]);
+
+  async function fetchPopulars() {
+    const popularTVShowList = await TVShowAPI.fetchPopulars();
+    if (popularTVShowList.length > 0) setCurrentTVShow(popularTVShowList[0]);
+  }
+
+  async function fetchRecommendations(tvShowId) {
+    const recommendationListResp = await TVShowAPI.fetchRecommendations(
+      tvShowId
+    );
+    if (recommendationListResp.length > 0)
+      setRecommendationList(recommendationListResp.slice(0, 10));
+  }
 
   useEffect(() => {
-    async function fetchPopulars() {
-      const popularTVShowList = await TVShowAPI.fetchPopulars();
-      if (popularTVShowList.length > 0) setCurrentTVShow(popularTVShowList[0]);
-    }
     fetchPopulars();
   }, []);
+
+  useEffect(() => {
+    if (currentTVShow) {
+      fetchRecommendations(currentTVShow.id);
+    }
+  }, [currentTVShow]);
+
+  console.log(recommendationList);
 
   return (
     <div
@@ -45,7 +64,24 @@ export function App() {
       <div className={s.tv_show_detail}>
         {currentTVShow && <TVShowDetail tvShow={currentTVShow} />}
       </div>
-      <div className={s.recommended_tv_shows}></div>
+      <div className={s.recommended_tv_shows}>
+        {currentTVShow && (
+          <>
+            <TVShowListItem
+              tvShow={currentTVShow}
+              onClick={(tvShow) => console.log("I have been clicked", tvShow)}
+            />
+            <TVShowListItem
+              tvShow={currentTVShow}
+              onClick={(tvShow) => console.log("I have been clicked", tvShow)}
+            />
+            <TVShowListItem
+              tvShow={currentTVShow}
+              onClick={(tvShow) => console.log("I have been clicked", tvShow)}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 }
