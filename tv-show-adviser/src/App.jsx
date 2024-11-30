@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import s from "./style.module.css";
 import { TVShowAPI } from "./api/tv-show";
 import { BACKDROP_BASE_URL } from "./config";
+import { TVShowDetail } from "./components/TVShowDetail/TVShowDetail";
 
 TVShowAPI.fetchPopulars();
 export function App() {
@@ -36,7 +37,9 @@ export function App() {
           </div>
         </div>
       </div>
-      <div className={s.tv_show_detail}>Tv show detail</div>
+      <div className={s.tv_show_detail}>
+        {currentTVShow && <TVShowDetail tvShow={currentTVShow} />}
+      </div>
       <div className={s.recommended_tv_shows}></div>
     </div>
   );
