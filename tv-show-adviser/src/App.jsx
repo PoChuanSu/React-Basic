@@ -6,6 +6,7 @@ import { TVShowDetail } from "./components/TVShowDetail/TVShowDetail";
 import logoImg from "./assets/images/logo.png";
 import { Logo } from "./components/Logo/Logo";
 import { TVShowListItem } from "./components/TVShowListItem/TVShowListItem";
+import { TVShowList } from "./components/TVShowList/TVShowList";
 
 TVShowAPI.fetchPopulars();
 export function App() {
@@ -35,7 +36,9 @@ export function App() {
     }
   }, [currentTVShow]);
 
-  console.log(recommendationList);
+  function updateCurrentTVShow(tvShow) {
+    setCurrentTVShow(tvShow);
+  }
 
   return (
     <div
@@ -66,20 +69,10 @@ export function App() {
       </div>
       <div className={s.recommended_tv_shows}>
         {currentTVShow && (
-          <>
-            <TVShowListItem
-              tvShow={currentTVShow}
-              onClick={(tvShow) => console.log("I have been clicked", tvShow)}
-            />
-            <TVShowListItem
-              tvShow={currentTVShow}
-              onClick={(tvShow) => console.log("I have been clicked", tvShow)}
-            />
-            <TVShowListItem
-              tvShow={currentTVShow}
-              onClick={(tvShow) => console.log("I have been clicked", tvShow)}
-            />
-          </>
+          <TVShowList
+            onClickItem={updateCurrentTVShow}
+            tvShowList={recommendationList}
+          />
         )}
       </div>
     </div>
