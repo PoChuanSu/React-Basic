@@ -23,7 +23,6 @@ const initialState = {
 function reducer(state, action) {
     switch (action.type) {
         case "dataReceived":
-            console.log(state);
             return { ...state, questions: action.payload, status: "ready" };
 
         case "dataFailed":
@@ -45,7 +44,8 @@ function reducer(state, action) {
             };
 
         case "nextQuestion":
-            return { ...state, index: state.index + 1, answer: null };
+            return { ...initialState, question };
+
         case "finish":
             return {
                 ...state,
@@ -54,6 +54,13 @@ function reducer(state, action) {
                     state.points > state.highscore
                         ? state.points
                         : state.highscore,
+            };
+
+        case "reset":
+            return {
+                ...initialState,
+                questions: state.questions,
+                status: "ready",
             };
 
         default:
@@ -117,6 +124,7 @@ export default function App() {
 
                 {status === "finished" && (
                     <FinishScreen
+                        dispatch={dispatch}
                         points={points}
                         maxPossiblePoints={maxPossiblePoints}
                         highscore={highscore}
