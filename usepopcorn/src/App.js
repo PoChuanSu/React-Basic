@@ -298,9 +298,9 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
             ) : (
                 <>
                     <header>
-                        <button className="btn-back" onClick={onCloseMovie}>
+                        {/* <button className="btn-back" onClick={onCloseMovie}>
                             &larr;
-                        </button>
+                        </button> */}
                         <img src={poster} alt={`Poster of ${movie} movie`} />
                         <div className="details-overview">
                             <h2>{title}</h2>
